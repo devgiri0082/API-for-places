@@ -1,10 +1,15 @@
 let place = require("../Model/PlacesModel");
 
 let createPlace = async ({ name: placeName, city, state }) => {
+  //   const p =
+  //     "The quick brown fox jumps over the lazy dog. If the dog reacted, was it really lazy?";
+  //   const regex = /Dog/gi;
+  //   console.log(p.replaceAll(regex, "ferret"));
+  let newSlug = placeName.replace(/ /g, "-") + "-" + Date.now();
   console.log(placeName, city, state);
   let newPlace = new place({
     place: placeName,
-    slug: `${placeName.split(" ").join("-")}${Date.now()}`,
+    slug: newSlug,
     city: city,
     state: state,
   });
@@ -34,6 +39,7 @@ let getSpecificPlace = async (slug) => {
 };
 
 let filterPlace = async (type, value) => {
+  console.log(type, value, "filter place");
   try {
     let filteredPlaces;
     if (type === "name") filteredPlaces = await place.find({ place: value });
